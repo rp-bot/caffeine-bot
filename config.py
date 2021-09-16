@@ -1,7 +1,6 @@
 import os
 import lib
 from time import sleep
-from IPython.display import clear_output
 
 
 operating_system = ""
@@ -14,7 +13,6 @@ while confirmation is False and operating_system == "":
         print('''You chose ''' + lib.operating_systems[operating_system])
         sleep(.5)
     except KeyError:
-        clear_output()
         print("please enter the right number")
         operating_system = ""
     else:
