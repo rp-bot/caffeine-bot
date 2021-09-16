@@ -32,7 +32,7 @@ while confirmation is False and operating_system == "":
                     sleep(.5)
                     break
             else:
-                print("please type Y or N")
+                print("please! type Y or N")
     #
     # print(os.getcwd())
     # os.s6ystem("gedit " + os.getcwd() + "/preferences.cfg")
