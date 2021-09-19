@@ -5,7 +5,7 @@ from time import sleep
 
 operating_system = ""
 confirmation = False
-YorN = ["y", "n"]
+YorN = ("y", "n")
 while confirmation is False and operating_system == "":
     operating_system = input(
         '''choose your OS\n1 for Windows,\n2 for Linux,\n3 for mac\n''')
@@ -22,9 +22,24 @@ while confirmation is False and operating_system == "":
                 "Do you wish to keep the changes [Y/N]: ").lower()
             if confirmation_input in YorN:
                 if confirmation_input == "y":
-                    # overwrite the list and the write to the orignal .cfg
-                    print("Done!")
-                    confirmation = True
+                    lib.writeconf_OS(lib.operating_systems[operating_system])
+                    print("the default text editor will be " + lib.def_text_editor[lib.operating_systems[operating_system]]+".")
+                    confirmation_input = ""
+                    while confirmation_input not in YorN:
+                        confirmation_input = input(
+                        "Do you wish to keep it [Y/N]: ").lower()
+                        if confirmation_input == 'y':
+                            confirmation = True
+                        elif confirmation_input == 'n':
+                            txteditor = "1"
+                            while txteditor.isdigit() is True:
+                                txteditor = input("please enter the CORRECT name of the text editor you wish to change to: ")
+                                if txteditor.isdigit() is True:
+                                    continue
+                                else:
+                                    lib.writeconf_TXT(txteditor)
+                        else:
+                            continue
                     break
                 elif confirmation_input == "n":
                     print("You can try again!")
