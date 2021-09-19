@@ -1,0 +1,7 @@
+
+__pycache__
+preferences_backup.cfg
+*.txt
+CACHEDIR.TAG
+README.md
+.pytest_cache
