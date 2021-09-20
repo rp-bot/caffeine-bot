@@ -1,31 +1,38 @@
 import datetime
 import re
 
-operating_systems = {"1": "Windows", "2": "Linux", "3": "Mac"}
+OPERATING_SYSTEMS = {"1": "Windows", "2": "Linux", "3": "Mac"}
 
-def_text_editor = {"Windows": "Notepad", "Linux": "gedit", "Mac": "TextEdit"}
+TEXT_EDITORS = {"Windows": "Notepad", "Linux": "gedit", "Mac": "TextEdit"}
+TDY = datetime.date.today().strftime("%d-%b-%y")
+F = open(f"typer_{TDY}.txt", "w+")
+CFG_R = open("preferences.cfg", "r").readlines()
+EXPR = r"(?<=\')(.*?)(?=\')"
 
-tdy = datetime.date.today().strftime("%d-%b-%y")
-typer = open(f"typer_{tdy}.txt", "w+")
-cfg_r = open("preferences.cfg", "r").readlines()
-expr = r"(?<=\')(.*?)(?=\')"
+
 def writeconf_OS(OS):
-    os = re.findall(r"(?<=\'){}(?=\')".format(OS),cfg_r[0])
+    os = re.findall(r"(?<=\'){}(?=\')".format(OS), CFG_R[0])
     if os:
         pass
     else:
-        cfg_r[0] = re.sub(expr, OS ,cfg_r[0])
-        cfg_r[1] = re.sub(expr, def_text_editor[OS],cfg_r[1])
+        CFG_R[0] = re.sub(EXPR, OS, CFG_R[0])
+        CFG_R[1] = re.sub(EXPR, TEXT_EDITORS[OS], CFG_R[1])
     cfg_w = open("preferences.cfg", "w+")
-    cfg_w.writelines(cfg_r)
+    cfg_w.writelines(CFG_R)
     cfg_w.close()
 
+
 def writeconf_TXT(TXT):
-    txt = re.findall(r"(?<=\'){}(?=\')".format(TXT),cfg_r[1])
+    txt = re.findall(r"(?<=\'){}(?=\')".format(TXT), CFG_R[1])
     if txt:
         pass
     else:
-        cfg_r[1] = re.sub(expr, TXT,cfg_r[1])
+        CFG_R[1] = re.sub(EXPR, TXT, CFG_R[1])
     cfg_w = open("preferences.cfg", "w+")
-    cfg_w.writelines(cfg_r)
+    cfg_w.writelines(CFG_R)
     cfg_w.close()
+
+
+def readconf():
+    os = re.findall(r"(?<=\')(.*?)(?=\')", CFG_R[0])
+    txt = re.findall(r"(?<=\')(.*?)(?=\')", CFG_R[1])
