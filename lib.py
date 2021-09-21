@@ -1,14 +1,16 @@
 import datetime
 import re
 import sys
+import os
 
 OPERATING_SYSTEMS = {"1": "Windows", "2": "Linux", "3": "Mac"}
 
 TEXT_EDITORS = {"Windows": "Notepad", "Linux": "gedit", "Mac": "TextEdit"}
 TDY = datetime.date.today().strftime("%d-%b-%y")
-F = open(f"typer_{TDY}.txt", "w+")
+TYPER = f"diarrhea/typer_{TDY}.txt"
+F = open(TYPER, "w+")
 CFG_R = open("preferences.cfg", "r").readlines()
-
+FR = open(TYPER, "r").readlines()
 
 EXPR = r"(?<=\')(.*?)(?=\')"
 
@@ -54,11 +56,29 @@ class ReadConf:
         try:
             return self.conf.group()
         except AttributeError:
-            sys.exit("\n.cfg error\n")
+            print("\n.cfg error\n")
+            sys.exit()
 
     def KillKey(self):
         try:
             return self.killkey.group()
         except AttributeError:
-            sys.exit("\n.cfg error\n")
+            print("\n.cfg error\n")
+            sys.exit()
+
+    def TXT(self):
+        try:
+            return self.txt.group()
+        except AttributeError:
+            print("\n.cfg error\n")
+            sys.exit()
+
+
+def readline(line):
+    FR.seek(line)
+    return FR.readline()
+
+
+if __name__ == "__main__":
+    pass
 

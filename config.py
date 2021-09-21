@@ -64,17 +64,19 @@ def cfg():
         os.system("clear")
         save = ""
         while save not in YN:
-            save = input("\nSave & Don't ask Again? [Y/N]").lower()
-            if save not in YN:
-                print("please enter [Y/N]\n")
-                continue
-            elif save == "Y":
+            save = input("\nDon't ask Again? [Y/N]: ").lower()
+            if save == "y":
                 lib.writeconf_CONF("True")
                 print("Done!")
                 print("your current preferences are: \n")
-                print(lib.CFG_R)
-            elif save == "N":
-                print("")
+                for i in range(0, len(lib.CFG_R)):
+                    print(lib.CFG_R[i])
+                print("\n")
+                CONFIRMATION = False
+                break
+            elif save == "n":
+                print("Done!")
+                CONFIRMATION = False
 
 
 if __name__ == "__main__":

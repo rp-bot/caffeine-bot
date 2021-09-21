@@ -1,4 +1,4 @@
-from lib import F, CFG_R, EXPR, ReadConf
+from lib import TYPER, F, CFG_R, EXPR, ReadConf
 from config import cfg
 from typer import type
 import os
@@ -6,10 +6,16 @@ import os
 #
 # print(os.getcwd())
 # os.s6ystem("gedit " + os.getcwd() + "/preferences.cfg")
-check = ReadConf().savecheck()
-if check == "False":
-    cfg()
 
+savecheck = ReadConf().savecheck()
+killkey = ReadConf().KillKey()
+txteditor = ReadConf().TXT()
+# if savecheck == "False":
+#     cfg()
 
-elif check == "True":
-    pass
+# if savecheck == "True":
+#     os.system("clear")
+#     print(f"hit [{killkey}] when you wish to quit")
+#     # .os.system("python3 hotkeylistener.pyw")
+#     os.system(f"{txteditor} " + os.getcwd() + f"/{TYPER}")
+#     type()
