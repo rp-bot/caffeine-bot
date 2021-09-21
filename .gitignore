@@ -4,3 +4,4 @@ preferences_backup.cfg
 CACHEDIR.TAG
 README.md
 .pytest_cache
+test.py
