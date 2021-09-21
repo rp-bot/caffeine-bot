@@ -1,4 +1,4 @@
-from pynput.keyboard import Key, KeyCode, Listener, Controller
+from pynput.keyboard import Key, Controller
 from time import sleep
 from lib import TDY
 
@@ -15,28 +15,4 @@ def type():
         keybrd.press(Key.enter)
         keybrd.release(Key.enter)
         cut += 1
-
-
-SHORTCUTS = [{KeyCode(char="a")}, {KeyCode(char="A")}]
-CURRENT = set()
-
-
-def execute():
-    pass
-
-
-def on_press(key):
-    if any([key in cut for cut in SHORTCUTS]):
-        CURRENT.add(key)
-        if any(all(k in CURRENT for k in cut) for cut in SHORTCUTS):
-            execute()
-
-
-def on_release(key):
-    if any([key in cut for cut in SHORTCUTS]):
-        CURRENT.remove(key)
-
-
-with Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
 
