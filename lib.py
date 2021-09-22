@@ -2,6 +2,8 @@ import datetime
 import re
 import sys
 import os
+from time import sleep
+from pynput.keyboard import Key, Controller
 
 OPERATING_SYSTEMS = {"1": "Windows", "2": "Linux", "3": "Mac"}
 
@@ -10,8 +12,6 @@ TDY = datetime.date.today().strftime("%d-%b-%y")
 TYPER = f"diarrhea/typer_{TDY}.txt"
 F = open(TYPER, "w+")
 CFG_R = open("preferences.cfg", "r").readlines()
-FR = open(TYPER, "r").readlines()
-
 EXPR = r"(?<=\')(.*?)(?=\')"
 
 
@@ -73,10 +73,40 @@ class ReadConf:
             print("\n.cfg error\n")
             sys.exit()
 
+    def OS(self):
+        try:
+            return self.os.group()
+        except AttributeError:
+            print("\n.cfg error\n")
+            sys.exit()
 
-def readline(line):
-    FR.seek(line)
-    return FR.readline()
+
+def type(txteditor, kill=False):
+    keybrd = Controller()
+    sleep(2)
+    os.system(f"{txteditor} " + os.getcwd() + f"/{TYPER}")
+    sleep(2)
+    line = 0
+    while kill is False:
+        for num in range(80):
+            keybrd.press(".")
+            sleep(0.1)
+            keybrd.press(Key.ctrl)
+            keybrd.press("s")
+            sleep(0.1)
+            keybrd.release(Key.ctrl)
+            keybrd.release("s")
+            f = open(TYPER, "r").readlines()
+            killkey = re.search(r"x|X", f[line])
+            if killkey:
+                print(f"\nHot key [{killkey.group()}] was pressed\n")
+                sys.exit()
+            else:
+                continue
+        line += 1
+        keybrd.release(".")
+        keybrd.press(Key.enter)
+        keybrd.release(Key.enter)
 
 
 if __name__ == "__main__":

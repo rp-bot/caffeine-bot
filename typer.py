@@ -3,12 +3,12 @@ import os
 import sys
 import re
 from time import sleep, time
-from lib import readline, ReadConf, TYPER, FR, F
+from lib import TYPER
 
 
 def type(txteditor, kill=False):
     keybrd = Controller()
-    sleep(1)
+    sleep(2)
     os.system(f"{txteditor} " + os.getcwd() + f"/{TYPER}")
     sleep(2)
     line = 0
@@ -35,4 +35,4 @@ def type(txteditor, kill=False):
 
 
 if __name__ == "__main__":
-    type()
+    pass

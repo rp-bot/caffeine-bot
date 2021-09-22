@@ -1,6 +1,7 @@
-from lib import TYPER, F, CFG_R, EXPR, ReadConf
+from lib import TYPER, F, CFG_R, EXPR, type, ReadConf
 from config import cfg
-from typer import type
+
+# from typer import type
 import os
 
 #
@@ -10,12 +11,12 @@ import os
 savecheck = ReadConf().savecheck()
 killkey = ReadConf().KillKey()
 txteditor = ReadConf().TXT()
-# if savecheck == "False":
-#     cfg()
+OS = ReadConf().OS()
+if savecheck.lower() == "false":
+    cfg()
 
-# if savecheck == "True":
-#     os.system("clear")
-#     print(f"hit [{killkey}] when you wish to quit")
-#     # .os.system("python3 hotkeylistener.pyw")
-#     os.system(f"{txteditor} " + os.getcwd() + f"/{TYPER}")
-#     type()
+elif savecheck.lower() == "true":
+    os.system("clear")
+    print(f"hit [{killkey}] when you wish to quit")
+    type(txteditor)
+    os.system("clear")
