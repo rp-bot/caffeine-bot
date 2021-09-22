@@ -3,7 +3,8 @@ import re
 import sys
 import os
 from time import sleep
-from pynput.keyboard import Key, Controller
+from pynput.keyboard import Key, Controller, KeyCode, Listener
+# from hotkeylistener import hotkey_scan
 
 OPERATING_SYSTEMS = {"1": "Windows", "2": "Linux", "3": "Mac"}
 
@@ -61,7 +62,7 @@ class ReadConf:
 
     def KillKey(self):
         try:
-            return self.killkey.group()
+            return self.killkey.group().lower()
         except AttributeError:
             print("\n.cfg error\n")
             sys.exit()
@@ -81,34 +82,67 @@ class ReadConf:
             sys.exit()
 
 
-def type(txteditor, kill=False):
+savecheck = ReadConf().savecheck()
+killkey = ReadConf().KillKey()
+txteditor = ReadConf().TXT()
+OS = ReadConf().OS()
+KEYBOARD = Controller()
+SHORTCUTS = [{KeyCode(char=killkey.lower())}, {KeyCode(char=killkey.upper())}]
+CURRENT = set()
+KILL = False
+
+
+def save(keybrd):
+    keybrd.press(Key.ctrl)
+    keybrd.press("s")
+    sleep(0.1)
+    keybrd.release(Key.ctrl)
+    keybrd.release("s")
+
+
+def hotkey_scan():
+    def execute(key):
+        global KILL, killkey
+        KILL = True
+        killkey = key
+
+    def on_press(key):
+
+        if any([key in cut for cut in SHORTCUTS]):
+            CURRENT.add(key)
+            if any(all(k in CURRENT for k in cut) for cut in SHORTCUTS):
+                execute(key)
+
+    def on_release(key):
+        if any([key in cut for cut in SHORTCUTS]):
+            CURRENT.remove(key)
+
+    listener = Listener(on_press=on_press, on_release=on_release)
+    listener.start()
+    sleep(0.5)
+
+
+def type():
+    global KILL, killkey
     keybrd = Controller()
     sleep(2)
     os.system(f"{txteditor} " + os.getcwd() + f"/{TYPER}")
     sleep(2)
     line = 0
-    while kill is False:
+    while KILL is False:
         for num in range(80):
-            keybrd.press(".")
+            keybrd.tap(".")
             sleep(0.1)
-            keybrd.press(Key.ctrl)
-            keybrd.press("s")
-            sleep(0.1)
-            keybrd.release(Key.ctrl)
-            keybrd.release("s")
-            f = open(TYPER, "r").readlines()
-            killkey = re.search(r"x|X", f[line])
-            if killkey:
-                print(f"\nHot key [{killkey.group()}] was pressed\n")
-                sys.exit()
-            else:
-                continue
+            hotkey_scan()
+            if KILL == True:
+                os.system("clear")
+                print(f"\nKill key [{killkey}] was pressed\n")
+                break
         line += 1
-        keybrd.release(".")
         keybrd.press(Key.enter)
         keybrd.release(Key.enter)
+        save(KEYBOARD)
 
 
 if __name__ == "__main__":
     pass
-
