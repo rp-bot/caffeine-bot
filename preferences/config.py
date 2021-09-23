@@ -1,5 +1,5 @@
 import os
-import lib
+from libraries import lib
 from time import sleep
 
 
@@ -29,7 +29,8 @@ def cfg():
                 if confirmation_input in YN:
                     if confirmation_input == "y":
                         os.system("clear")
-                        lib.writeconf_OS(lib.OPERATING_SYSTEMS[OPERATING_SYSTEM])
+                        lib.writeconf_OS(
+                            lib.OPERATING_SYSTEMS[OPERATING_SYSTEM])
                         print(
                             "the default text editor will be "
                             + lib.TEXT_EDITORS[lib.OPERATING_SYSTEMS[OPERATING_SYSTEM]]

@@ -1,6 +1,6 @@
 from time import sleep
-from lib import TYPER, F, CFG_R, EXPR, type, savecheck, killkey
-from config import cfg
+from libraries.lib import TYPER, F, CFG_R, EXPR, type, savecheck, killkey
+from preferences.config import cfg
 import os
 
 
