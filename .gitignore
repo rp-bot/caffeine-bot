@@ -6,3 +6,4 @@ CACHEDIR.TAG
 .pytest_cache
 tests
 recycle
+preferences/preferences.cfg
