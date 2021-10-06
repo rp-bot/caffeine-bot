@@ -13,11 +13,10 @@ def cfg():
             """choose your OS\n1 for Windows,\n2 for Linux,\n3 for mac\n"""
         )
         try:
-            os.system("clear")
+            # os.system("clear")
             print("""You chose """ + lib.OPERATING_SYSTEMS[OPERATING_SYSTEM])
             sleep(0.5)
         except KeyError:
-            os.system("clear")
             print("please enter the right number")
             OPERATING_SYSTEM = ""
         else:
@@ -81,6 +80,64 @@ def cfg():
                 print("\n")
                 CONFIRMATION = False
                 break
+
+
+class ConfigScript:
+    def __init__(self):
+        self.OS = ""
+        self.confirm = False
+        self.yn = ("y", "n")
+
+    def operating_system(self):
+        while self.OS == "":
+            self.OS = input(
+                """choose your OS\n1 for Windows,\n2 for Linux,\n3 for mac\n"""
+            )
+            if self.OS.isdigit() is False:
+                print("please enter a number")
+                self.OS = ""
+            elif self.OS not in ["1", "2", "3"]:
+                print("please enter the number which pertains to your OS")
+                self.OS = ""
+
+    def Windows(self):
+        while self.confirm is False:
+            confirm_input = ""
+            confirm_input = input("Do you wish to keep the changes [Y/N]: "
+                                  ).lower()
+            if confirm_input in self.yn:
+                if confirm_input == "y":
+                    os.system("cls")
+                    lib.writeconf_OS(
+                         lib.OPERATING_SYSTEMS[self.OS])
+                     print(
+                          "the default text editor will be "
+                          + lib.TEXT_EDITORS[lib.OPERATING_SYSTEMS[OPERATING_SYSTEM]]
+                            + "."
+                          )
+                      confirmation_input = ""
+                       while confirmation_input not in YN:
+                            confirmation_input = input(
+                                "Do you wish to keep it [Y/N]: "
+                            ).lower()
+                            if confirmation_input == "y":
+                                CONFIRMATION = True
+                            elif confirmation_input == "n":
+                                txteditor = input(
+                                    "please enter the CORRECT name of the text editor you wish to change to: "
+                                )
+                                lib.writeconf_TXT(txteditor)
+                                CONFIRMATION = True
+                            else:
+                                continue
+                        break
+                    elif confirmation_input == "n":
+                        print("You can try again!")
+                        OPERATING_SYSTEM = ""
+                        sleep(0.5)
+                        break
+            else:
+                print("please! type Y or N")
 
 
 if __name__ == "__main__":
