@@ -109,33 +109,33 @@ class ConfigScript:
                 if confirm_input == "y":
                     os.system("cls")
                     lib.writeconf_OS(
-                         lib.OPERATING_SYSTEMS[self.OS])
-                     print(
-                          "the default text editor will be "
-                          + lib.TEXT_EDITORS[lib.OPERATING_SYSTEMS[OPERATING_SYSTEM]]
-                            + "."
-                          )
-                      confirmation_input = ""
-                       while confirmation_input not in YN:
-                            confirmation_input = input(
-                                "Do you wish to keep it [Y/N]: "
-                            ).lower()
-                            if confirmation_input == "y":
-                                CONFIRMATION = True
-                            elif confirmation_input == "n":
-                                txteditor = input(
-                                    "please enter the CORRECT name of the text editor you wish to change to: "
-                                )
-                                lib.writeconf_TXT(txteditor)
-                                CONFIRMATION = True
-                            else:
-                                continue
+                        lib.OPERATING_SYSTEMS[self.OS])
+                    print(
+                        "the default text editor will be "
+                        + lib.TEXT_EDITORS[lib.OPERATING_SYSTEMS[self.OS]]
+                        + "."
+                    )
+                    confirm_input = ""
+                    while confirm_input not in self.yn:
+                        confirm_input = input(
+                            "Do you wish to keep it [Y/N]: "
+                        ).lower()
+                        if confirm_input == "y":
+                            self.confirm = True
+                        elif confirm_input == "n":
+                            txteditor = input(
+                                "please enter the CORRECT name of the text editor you wish to change to: "
+                            )
+                            lib.writeconf_TXT(txteditor)
+                            self.confirm = True
+                        else:
+                            continue
                         break
-                    elif confirmation_input == "n":
-                        print("You can try again!")
-                        OPERATING_SYSTEM = ""
-                        sleep(0.5)
-                        break
+                elif confirm_input == "n":
+                    print("You can try again!")
+                    self.OS = ""
+                    sleep(0.5)
+                    break
             else:
                 print("please! type Y or N")
 
