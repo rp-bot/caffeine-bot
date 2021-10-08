@@ -7,7 +7,8 @@ from pynput.keyboard import Key, Controller, KeyCode, Listener
 
 OPERATING_SYSTEMS = {"1": "Windows", "2": "Linux", "3": "Mac"}
 
-TEXT_EDITORS = {"Windows": "Notepad", "Linux": "gedit", "Mac": "TextEdit"}
+TEXT_EDITORS = {"Windows": "notepad.exe", "Linux": "gedit", "Mac": "TextEdit"}
+CMDS = {"Windows": ["clear", "\ "], "Linux": ["clear"], "Mac": ["clear"]}
 TDY = datetime.date.today().strftime("%d-%b-%y")
 TYPER = f"diarrhea/typer_{TDY}.txt"
 F = open(TYPER, "w+")
@@ -41,6 +42,14 @@ def writeconf_TXT(TXT):
 
 def writeconf_CONF(CONF):
     CFG_R[3] = re.sub(EXPR, CONF, CFG_R[3])
+    cfg_w = open(CFG, "w+")
+    cfg_w.writelines(CFG_R)
+    cfg_w.close()
+
+
+def writeconf_CMDS(os):
+    for num in range(0, len(CMDS[os])):
+        CFG_R[4+num] = re.sub(EXPR, CMDS[os], CFG_R[4+num])
     cfg_w = open(CFG, "w+")
     cfg_w.writelines(CFG_R)
     cfg_w.close()

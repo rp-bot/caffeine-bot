@@ -88,7 +88,7 @@ class ConfigScript:
         self.confirm = False
         self.yn = ("y", "n")
 
-    def operating_system(self):
+    def cfgsetup(self):
         while self.OS == "":
             self.OS = input(
                 """choose your OS\n1 for Windows,\n2 for Linux,\n3 for mac\n"""
@@ -100,45 +100,69 @@ class ConfigScript:
                 print("please enter the number which pertains to your OS")
                 self.OS = ""
 
-    def Windows(self):
-        while self.confirm is False:
-            confirm_input = ""
-            confirm_input = input("Do you wish to keep the changes [Y/N]: "
-                                  ).lower()
-            if confirm_input in self.yn:
-                if confirm_input == "y":
-                    os.system("cls")
-                    lib.writeconf_OS(
-                        lib.OPERATING_SYSTEMS[self.OS])
-                    print(
-                        "the default text editor will be "
-                        + lib.TEXT_EDITORS[lib.OPERATING_SYSTEMS[self.OS]]
-                        + "."
-                    )
+            else:
+                print("Your OS is: " + lib.OPERATING_SYSTEMS[self.OS])
+                while self.confirm is False:
                     confirm_input = ""
-                    while confirm_input not in self.yn:
-                        confirm_input = input(
-                            "Do you wish to keep it [Y/N]: "
-                        ).lower()
+                    confirm_input = input(
+                        "Do you wish to keep the changes [Y/N]: "
+                    ).lower()
+                    if confirm_input in self.yn:
                         if confirm_input == "y":
-                            self.confirm = True
-                        elif confirm_input == "n":
-                            txteditor = input(
-                                "please enter the CORRECT name of the text editor you wish to change to: "
-                            )
-                            lib.writeconf_TXT(txteditor)
+                            lib.writeconf_OS(lib.OPERATING_SYSTEMS[self.OS])
+                            # lib.writeconf_TXT(lib.
+                            #                   TEXT_EDITORS
+                            #                   [lib.OPERATING_SYSTEMS[self.OS]])
+
+                            os.system("cls")
+                            print(
+                                "Your OS is: " + lib.OPERATING_SYSTEMS[self.OS])
                             self.confirm = True
                         else:
-                            continue
-                        break
-                elif confirm_input == "n":
-                    print("You can try again!")
-                    self.OS = ""
-                    sleep(0.5)
-                    break
-            else:
-                print("please! type Y or N")
+                            self.OS = ""
+                            break
+                    elif confirm_input not in self.yn:
+                        print("please type Y/N")
+
+    def Windows(self):
+        # while self.confirm is False:
+        #     confirm_input = ""
+        #     confirm_input = input("Do you wish to keep the changes [Y/N]: "
+        #                           ).lower()
+        # if confirm_input in self.yn:
+        #     if confirm_input == "y":
+        # os.system("cls")
+        # lib.writeconf_OS(
+        #     lib.OPERATING_SYSTEMS[self.OS])
+        # print(
+        #     "the default text editor will be "
+        #                 + lib.TEXT_EDITORS[lib.OPERATING_SYSTEMS[self.OS]]
+        #                 + "."
+        #     )
+        # confirm_input = ""
+        # while confirm_input not in self.yn:
+        #         confirm_input = input(
+        #             "Do you wish to keep it [Y/N]: "
+        #             ).lower()
+        #     if confirm_input == "y":
+        #                 self.confirm = True
+        #     elif confirm_input == "n":
+        #                 txteditor = input(
+        #                     "please enter the CORRECT name of the text editor you wish to change to: "
+        #                 )
+        #                 lib.writeconf_TXT(txteditor)
+        #                 self.confirm = True
+
+        #     elif confirm_input == "n":
+        #             print("You can try again!")
+        #             self.OS = ""
+        #             sleep(0.5)
+
+        #     else:
+        #         print("please! type Y or N")
+        pass
 
 
 if __name__ == "__main__":
-    pass
+    hey = ConfigScript()
+    hey.operating_system()
