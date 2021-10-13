@@ -9,7 +9,7 @@ if __name__ == "__main__":
         cfg()
 
     elif savecheck.lower() == "true":
-        os.system("clear")
+        os.system("cls")
         print(f"hit [{killkey}] when you wish to quit")
         sleep(.5)
         type()

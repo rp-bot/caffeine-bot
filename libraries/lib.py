@@ -8,7 +8,8 @@ from pynput.keyboard import Key, Controller, KeyCode, Listener
 OPERATING_SYSTEMS = {"1": "Windows", "2": "Linux", "3": "Mac"}
 
 TEXT_EDITORS = {"Windows": "notepad.exe", "Linux": "gedit", "Mac": "TextEdit"}
-CMDS = {"Windows": ["clear", "\ "], "Linux": ["clear"], "Mac": ["clear"]}
+CMDS = {"Windows": ["clear", "\ "], "Linux": ["clear", "/"],
+        "Mac": ["clear", "/"]}
 TDY = datetime.date.today().strftime("%d-%b-%y")
 TYPER = f"diarrhea/typer_{TDY}.txt"
 F = open(TYPER, "w+")
@@ -49,7 +50,7 @@ def writeconf_CONF(CONF):
 
 def writeconf_CMDS(os):
     for num in range(0, len(CMDS[os])):
-        CFG_R[4+num] = re.sub(EXPR, CMDS[os], CFG_R[4+num])
+        CFG_R[4+num] = re.sub(EXPR, CMDS[os][num], CFG_R[4+num])
     cfg_w = open(CFG, "w+")
     cfg_w.writelines(CFG_R)
     cfg_w.close()
@@ -61,6 +62,7 @@ class ReadConf:
         self.txt = re.search(EXPR, CFG_R[1])
         self.killkey = re.search(EXPR, CFG_R[2])
         self.conf = re.search(EXPR, CFG_R[3])
+        self.cmds = [re.search(EXPR, CFG_R[4]), re.search(EXPR, CFG_R[5])]
 
     def savecheck(self):
         try:
@@ -89,6 +91,16 @@ class ReadConf:
         except AttributeError:
             print("\n.cfg error\n")
             sys.exit()
+
+    def CMDS(self):
+        try:
+            self.cmds[0].group()
+            self.cmds[1].group()
+        except AttributeError:
+            print("\n.cfg error\n")
+            sys.exit()
+        else:
+            return self.cmds
 
 
 savecheck = ReadConf().savecheck()

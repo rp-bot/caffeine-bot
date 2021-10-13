@@ -113,6 +113,7 @@ class ConfigScript:
                             # lib.writeconf_TXT(lib.
                             #                   TEXT_EDITORS
                             #                   [lib.OPERATING_SYSTEMS[self.OS]])
+                            lib.writeconf_CMDS(lib.OPERATING_SYSTEMS[self.OS])
 
                             os.system("cls")
                             print(
